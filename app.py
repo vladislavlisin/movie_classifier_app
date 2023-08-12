@@ -63,10 +63,14 @@ def get_db():
 ####################################################
 
 
-@app.route("/add_post", methods=["POST", "GET"])
-def addPost():
+@app.route("/index", methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
+def index():
     db = get_db()
     dbase = FDataBase(db)
+
+    sentiment = "=D"
+    rating = "=D"
 
     # if data came properly
     if request.method == "POST":
@@ -90,11 +94,11 @@ def addPost():
                 pad = data['data_2'].preprocess(text)
                 rating = models["gru_2"].predict(pad)
 
-            flash(f"Sentiment {sentiment}", category='success')
-            flash(f"Rating {rating}", category='success')
+            flash(f"Sentiment: {sentiment}", category='success')
+            flash(f"Rating: {rating}", category='success')
         else:
             flash("Too short", category='error')
-    return render_template("add_post.html", menu=dbase.getMenu(), title='Add post')
+    return render_template("index.html", sentiment=sentiment, rating=rating)
 
 
 
@@ -107,15 +111,6 @@ def showPost(alias):
         abort(404)
     print(alias)
     return render_template('post.html', menu=dbase.getMenu(), title=title, post=post)
-
-
-@app.route("/index")
-@app.route("/")
-def index():
-    db = get_db()
-    dbase = FDataBase(db)
-    print(url_for("index"))
-    return render_template('index.html', menu=dbase.getMenu(), posts=dbase.getPostsAnonce())
 
 
 @app.teardown_appcontext

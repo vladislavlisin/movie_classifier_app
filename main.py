@@ -23,7 +23,7 @@ from tensorflow.python.client import device_lib
 
 def get_w2v_model():
     print("Start getting embs")
-    fname = "/content/drive/MyDrive/тестовое задание сервис оценки фильмов/datas/vectors"
+    fname = "./data/vectors"
 
     if not os.path.isfile(fname):
         wv = api.load('word2vec-google-news-300')
@@ -54,7 +54,7 @@ def get_w2v_embeddings(train_word_index, model, EMBEDDING_DIM=300):
 def pipeline(X, model_name, data_title, w2v_model):
     print("Start data fit")
 
-    data_path = "/content/drive/MyDrive/тестовое задание сервис оценки фильмов/datas/" + data_title
+    data_path = "./data/" + data_title
     if os.path.isfile(data_path):
       with open(data_path, "rb") as fp:  # Unpickling
         X = pickle.load(fp)
@@ -77,13 +77,13 @@ def pipeline(X, model_name, data_title, w2v_model):
     input_length = X_train.shape[1]
 
     # если модель есть - подгружаем, иначе берём эмбединги, создаём модель, обучаем и дэмпим
-    model_path = "/content/drive/MyDrive/тестовое задание сервис оценки фильмов/models/" + model_name
+    model_path = "./models/" + model_name
     if os.path.isfile(model_path):
         with open(model_path, "rb") as fp:  # Unpickling
           gru = pickle.load(fp)
     else:
         print("Start emb fit")
-        embeddings_path = "/content/drive/MyDrive/тестовое задание сервис оценки фильмов/datas/w2v_" + data_title
+        embeddings_path = "./data/w2v_" + data_title
         if os.path.isfile(embeddings_path):
             with open(embeddings_path, "rb") as fp:  # Unpickling
                 en_w2v_emb = pickle.load(fp)
@@ -107,7 +107,7 @@ def pipeline(X, model_name, data_title, w2v_model):
 def input():
     print("Start data input")
 
-    df = pd.read_csv("/content/drive/MyDrive/тестовое задание сервис оценки фильмов/quarter_dataset")
+    df = pd.read_csv("./data/quarter_dataset")
 
     # prepare data for sentiment model
 

@@ -1,8 +1,6 @@
-from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
 
-from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report, confusion_matrix
 
@@ -72,7 +70,7 @@ class Model(object):
 
     def train(self, X_train, y_train, model_name, epochs=20, batch_size=32):
 
-        model_save_path = "/content/drive/MyDrive/тестовое задание сервис оценки фильмов/checks/" + model_name + '.h5'
+        model_save_path = "./checks/" + model_name + '.h5'
         self.checkpoint(model_name, model_save_path, monitor='val_accuracy')
 
         history = self.gru_model.fit(
