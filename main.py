@@ -107,7 +107,7 @@ def pipeline(X, model_name, data_title, w2v_model):
 def input():
     print("Start data input")
 
-    df = pd.read_csv("./data/quarter_dataset")
+    df = pd.read_csv("./data/half_dataset")
 
     # prepare data for sentiment model
 
